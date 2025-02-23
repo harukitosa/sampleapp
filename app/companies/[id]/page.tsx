@@ -44,15 +44,23 @@ const [company, setCompany] = useState<Company | null>(null);
   }
 
   return (
-    <div>
-      <h1>{company.name}</h1>
-      <p>{company.description}</p>
+    <div className="max-w-2xl mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-4">{company.name}</h1>
+      <p className="text-lg mb-4">{company.description}</p>
       {company.website && (
-        <a href={company.website} target="_blank" rel="noopener noreferrer">
+        <a
+          href={company.website}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-500 hover:underline mb-4 block"
+        >
           Visit Website
         </a>
       )}
-      <button onClick={() => router.push(`/companies/${id}/edit`)}>
+      <button
+        onClick={() => router.push(`/companies/${id}/edit`)}
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
         Edit Company
       </button>
     </div>
