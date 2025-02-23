@@ -20,7 +20,7 @@ const CompanyDetails = () => {
 const [company, setCompany] = useState<Company | null>(null);
 type Recruitment = {
   id: number;
-  title: string;
+  job_title: string;
   description: string;
   created_at: string;
 };
@@ -98,15 +98,21 @@ const [recruitments, setRecruitments] = useState<Recruitment[]>([]);
         <p>No recruitments available.</p>
       ) : (
         <ul>
-          {recruitments.map((recruitment) => (
-            <li key={recruitment.id} className="mb-4">
-              <h3 className="text-xl font-semibold">{recruitment.title}</h3>
-              <p>{recruitment.description}</p>
-              <p className="text-sm text-gray-500">
-                Posted on: {new Date(recruitment.created_at).toLocaleDateString()}
-              </p>
-            </li>
-          ))}
+{recruitments.map((recruitment) => (
+  <li key={recruitment.id} className="mb-4">
+    <h1 className="text-xl font-semibold">{recruitment.job_title}</h1>
+    <p>{recruitment.description}</p>
+    <p className="text-sm text-gray-500">
+      Posted on: {new Date(recruitment.created_at).toLocaleDateString()}
+    </p>
+    <button
+      onClick={() => router.push(`/companies/${id}/recruitment/${recruitment.id}`)}
+      className="text-blue-500 hover:underline"
+    >
+      View Details
+    </button>
+  </li>
+))}
         </ul>
       )}
     </div>

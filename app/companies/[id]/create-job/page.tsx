@@ -27,12 +27,17 @@ const CreateJobPage = () => {
         description,
         location,
       },
-    ]);
+    ]).select();
 
     if (error) {
       console.error('Error inserting data:', error);
     } else {
       console.log('Data inserted successfully:', data);
+      if (data) {
+        // Redirect to newly created recruitment page
+        router.push(`/companies/${id}/recruitment/${data[0].id}`);
+      }
+      console.warn('No data returned after insert');
     }
   };
 
