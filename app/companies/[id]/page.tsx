@@ -18,6 +18,14 @@ const CompanyDetails = () => {
 };
 
 const [company, setCompany] = useState<Company | null>(null);
+type Recruitment = {
+  id: number;
+  title: string;
+  description: string;
+  created_at: string;
+};
+
+const [recruitments, setRecruitments] = useState<Recruitment[]>([]);
 
   useEffect(() => {
     if (id) {
@@ -36,6 +44,22 @@ const [company, setCompany] = useState<Company | null>(null);
       };
 
       fetchCompany();
+    }
+    if (id) {
+      const fetchRecruitments = async () => {
+        const { data, error } = await supabase
+          .from('recruitments')
+          .select('*')
+          .eq('company_id', id);
+
+        if (error) {
+          console.error('Error fetching recruitments:', error);
+        } else {
+          setRecruitments(data);
+        }
+      };
+
+      fetchRecruitments();
     }
   }, [id]);
 
@@ -63,6 +87,28 @@ const [company, setCompany] = useState<Company | null>(null);
       >
         Edit Company
       </button>
+      <button
+        onClick={() => router.push(`/companies/${id}/create-job`)}
+        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mt-4"
+      >
+        Create Job
+      </button>
+      <h2 className="text-2xl font-bold mt-8 mb-4">Recruitment Listings</h2>
+      {recruitments.length === 0 ? (
+        <p>No recruitments available.</p>
+      ) : (
+        <ul>
+          {recruitments.map((recruitment) => (
+            <li key={recruitment.id} className="mb-4">
+              <h3 className="text-xl font-semibold">{recruitment.title}</h3>
+              <p>{recruitment.description}</p>
+              <p className="text-sm text-gray-500">
+                Posted on: {new Date(recruitment.created_at).toLocaleDateString()}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
