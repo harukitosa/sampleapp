@@ -52,6 +52,9 @@ const [company, setCompany] = useState<Company | null>(null);
           Visit Website
         </a>
       )}
+      <button onClick={() => router.push(`/companies/${id}/edit`)}>
+        Edit Company
+      </button>
     </div>
   );
 };
