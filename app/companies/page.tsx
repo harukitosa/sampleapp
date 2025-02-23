@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { createClient } from '../../utils/supabase/client';
 
 interface Company {
@@ -45,7 +46,11 @@ const CompanyList: React.FC = () => {
       <ul className="space-y-4">
         {companies.map((company) => (
           <li key={company.id} className="p-4 border rounded shadow">
-            <h2 className="text-xl font-semibold">{company.name}</h2>
+            <h2 className="text-xl font-semibold">
+              <Link href={`/companies/${company.id}`}>
+                {company.name}
+              </Link>
+            </h2>
             {company.description && <p>{company.description}</p>}
             {company.website && (
               <a href={company.website} target="_blank" rel="noopener noreferrer" className="text-blue-500">
